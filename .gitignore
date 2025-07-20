@@ -1,4 +1,37 @@
-build/
+# Global
+.DS_Store
+Thumbs.db
+
+# Node.js / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+
+# Vite cache
+frontend/.vitepress/cache
+frontend/.eslintcache
+
+# npm logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# C++ / Backend
+backend/build/
 *.o
+*.obj
 *.exe
 *.out
+*.a
+*.so
+*.dll
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# VSCode 
+.vscode/
+*.code-workspace
