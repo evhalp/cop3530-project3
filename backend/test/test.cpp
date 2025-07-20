@@ -2,7 +2,7 @@
 #include <iostream>
 
 // change if you choose to use a different header name
-#include "AdjacencyList.h"
+#include "../include/AdjacencyList.h"
 
 using namespace std;
 
