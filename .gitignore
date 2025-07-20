@@ -35,3 +35,7 @@ Makefile
 # VSCode 
 .vscode/
 *.code-workspace
+
+# CLion / JetBrains IDEs
+.idea/
+cmake-build-*/
