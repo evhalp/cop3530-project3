@@ -1,5 +1,5 @@
 #include <iostream>
-#include "AdjacencyList.h"
+#include "../include/AdjacencyList.h"
 
 using namespace std;
 
