@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/jenni/School/DSA/P3/cop3530-project3/build/Tests-b12d07c_tests.cmake")
+  include("C:/Users/jenni/School/DSA/P3/cop3530-project3/build/Tests-b12d07c_tests.cmake")
+else()
+  add_test(Tests_NOT_BUILT-b12d07c Tests_NOT_BUILT-b12d07c)
+endif()
