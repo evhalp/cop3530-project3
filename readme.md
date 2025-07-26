@@ -11,7 +11,7 @@
   `[start_station_name, end_station_name, month, day, time]`
 
 - **Output:**  
-  `[Edge1, Edge2, ...]`
+  `pair<int time, vector<Edge>[Edge edge1, Edge edge2, ...]>`
 
 ## Current Data Structure Ideas
 
