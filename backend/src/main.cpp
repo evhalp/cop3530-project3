@@ -1,19 +1,22 @@
 #include <iostream>
+#include <utility>
+#include <vector>
 
 #include "../include/AdjacencyList.h"
-
-using namespace std;
+//#include "../include/Dijkstra.h"
+#include "../include/AStar.h"
 
 int main() {
-    int no_of_lines, power_iterations;
-    string from, to;
-    cin >> no_of_lines;
-    cin >> power_iterations;
-    for (int i = 0; i < no_of_lines; i++) {
-        cin >> from;
-        cin >> to;
-        // Do Something
-    }
-    //Create a graph object
-    // Created_Graph.PageRank(power_iterations);}
+    AdjacencyList adj_list;
+    Dijkstra dijkstra;
+    AStar a_star;
+    adj_list.LoadFromCSV("../../data/subway_travel_times.csv");
+
+    // Get stations from front end
+    Station station1, station2;
+
+    auto dijkstra_output = dijkstra.GetOutput(adj_list, station1, station2);
+    auto a_star_output = a_star.GetOutput(adj_list, station1, station2);
+
+    // Send time & edges to front end
 }
