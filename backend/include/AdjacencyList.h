@@ -29,7 +29,12 @@ struct ArrayHash {
 
 struct StationHash {
     std::size_t operator()(const Station& station) const {
-        return std::hash<std::string>{}(station.station_name);
+        const auto station_name = std::hash<std::string>{}(station.station_name);
+        const auto latitude = std::hash<double>{}(station.coordinates.first);
+        const auto longitude = std::hash<double>{}(station.coordinates.second);
+        // Bitwise X-OR Hash
+        // https://www.geeksforgeeks.org/cpp/implement-custom-hash-functions-for-user-defined-types-in-std-unordered_map
+        return station_name ^ (latitude << 1) ^ (longitude << 2);
     }
 };
 
