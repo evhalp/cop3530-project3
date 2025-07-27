@@ -55,7 +55,7 @@ class AdjacencyList {
         void LoadFromCSV(const std::string& filename);
 
         Station* GetStation(int station_id);
-        int GetStationId(const std::string& station_name);
+        int GetStationId(const Station& station);
         std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList(std::string month,
             std::string time_of_day, std::string day_of_week);
         int GetStationCount() const { return station_count_; }
