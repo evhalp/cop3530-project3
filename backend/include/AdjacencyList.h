@@ -27,12 +27,18 @@ struct ArrayHash {
     }
 };
 
+struct StationHash {
+    std::size_t operator()(const Station& station) const {
+        return std::hash<std::string>{}(station.station_name);
+    }
+};
+
 class AdjacencyList {
     private:
 
         // Bidirectionally map station IDs to stations
         std::unordered_map<int, Station> id_to_station_;
-        std::unordered_map<std::string, int> station_to_id_;
+        std::unordered_map<Station, int, StationHash> station_to_id_;
 
         // Store multiple different adjacency lists mapped by a composite key containing month, day, and time of day
         std::unordered_map<std::array<std::string, 3>, std::unordered_map<int, std::vector<Edge>>, ArrayHash> adj_list_;
