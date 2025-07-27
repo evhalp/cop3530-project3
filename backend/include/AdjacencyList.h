@@ -11,9 +11,9 @@ struct Station {
 };
 
 struct Edge {
-    std::string start_station;
-    std::string end_station;
-    double travel_time;
+    Station start_station;
+    Station end_station;
+    double travel_time{};
 };
 
 struct ArrayHash {
@@ -50,19 +50,26 @@ class AdjacencyList {
 
         int station_count_;
 
+        // Helper function for AddEdge
+        // Adds station to bidirectional maps. Returns the new ID for the added station
+        int AddStation(const Station &station);
+        // Helper function for LoadFromCSV
+        // Creates provided stations and adds an edge between the two into the adjacency list matching the composite key
+        void AdjacencyList::AddEdge(const std::array<std::string, 3>& composite_key,
+            const Station& start_station, const Station& end_station, double travel_time);
+
     public:
 
-        AdjacencyList() : station_count_(0) {};
+        explicit AdjacencyList() : station_count_(0) {};
 
-        void AddStation(const std::string& station_name, double lat, double lon);
-        void AddEdge(const std::string& month, const std::string& time_of_day, const std::string& day_of_week,
-            const std::string& start_station, const std::string& end_station, double travel_time);
-        void LoadFromCSV(const std::string& filename);
+        // Populates adjacency_list using the given file path
+        void LoadFromCSV(const std::string& file_path);
 
         Station* GetStation(int station_id);
         int GetStationId(const Station& station);
-        std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList(std::string month,
-            std::string time_of_day, std::string day_of_week);
         int GetStationCount() const { return station_count_; }
+
+        // Accessor function to allow AStar and Dijkstra access to the adjacency list.
+        std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList(const std::array<std::string, 3>& composite_key);
 
 };
