@@ -26,13 +26,13 @@ class Dijkstra {
     std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList() const;
     // Helper function for GetQuickestPath
     // Relaxes the edge between two stations
-    void Dijkstra::relaxEdge(int from_id, int to_id, double edge_weight,
-                            std::unordered_map<int, double>& times,
-                            std::unordered_map<int, int>& predecessors,
-                            std::priority_queue<Node, std::vector<Node>, std::greater<>>& pq);
+    void relaxEdge(int from_id, int to_id, double edge_weight,
+                    std::unordered_map<int, double>& times,
+                    std::unordered_map<int, int>& predecessors,
+                    std::priority_queue<Node, std::vector<Node>, std::greater<>>& pq);
     // Helper function for GetQuickestPath
     // Uses predecessors list to get the quickest path found by Dijkstra algorithm
-    std::vector<Edge>* GetPath(std::unordered_map<int, int> predecessors, int start_id, int end_id) const;
+    std::vector<Edge> GetPath(std::unordered_map<int, int> predecessors, int start_id, int end_id) const;
 
   public:
 
@@ -44,7 +44,5 @@ class Dijkstra {
 
     void SetCompositeKey(const std::array<std::string, 3>& composite_key) {composite_key_ = composite_key;}
     std::array<std::string, 3> GetCompositeKey() const { return composite_key_; }
-
-    ~Dijkstra();
 
 };
