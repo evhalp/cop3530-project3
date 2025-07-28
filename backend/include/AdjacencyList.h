@@ -55,7 +55,7 @@ class AdjacencyList {
         int AddStation(const Station &station);
         // Helper function for LoadFromCSV
         // Creates provided stations and adds an edge between the two into the adjacency list matching the composite key
-        void AdjacencyList::AddEdge(const std::array<std::string, 3>& composite_key,
+        void AddEdge(const std::array<std::string, 3>& composite_key,
             const Station& start_station, const Station& end_station, double travel_time);
 
     public:
@@ -65,8 +65,8 @@ class AdjacencyList {
         // Populates adjacency_list using the given file path
         void LoadFromCSV(const std::string& file_path);
 
-        Station* GetStation(int station_id);
-        int GetStationId(const Station& station);
+        Station* GetStation(int station_id) {  return &id_to_station_[station_id]; }
+        int GetStationId(const Station& station) { return station_to_id_[station]; }
         int GetStationCount() const { return station_count_; }
 
         // Accessor function to allow AStar and Dijkstra access to the adjacency list.
