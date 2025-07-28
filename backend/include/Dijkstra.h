@@ -12,6 +12,11 @@ class Dijkstra {
       double travel_time;
 
       Node(int id, double time) : station_id(id), travel_time(time) {}
+
+      bool operator>(const Node& other) const {
+        return travel_time > other.travel_time;
+      }
+
     };
 
     std::array<std::string, 3> composite_key_;
