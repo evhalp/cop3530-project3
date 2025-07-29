@@ -22,8 +22,8 @@ include_directories(backend/src)
 add_executable(Main
         backend/src/main.cpp # your main file
         backend/include/AdjacencyList.h backend/src/AdjacencyList.cpp
-        backend/include/Dijkstra.h
-        backend/src/Dijkstra.cpp
+        backend/include/Dijkstra.h backend/src/Dijkstra.cpp
+        backend/include/AStar.h backend/include/AStar.cpp
         # add your own header files below - should be automatically added in CLion
         # example (can also separate with newlines):
         # src/AVL.h src/AVL.cpp
@@ -33,6 +33,8 @@ add_executable(Main
 add_executable(Tests
         backend/test/test.cpp # your test file
         backend/include/AdjacencyList.h backend/src/AdjacencyList.cpp
+        backend/include/Dijkstra.h backend/src/Dijkstra.cpp
+        backend/include/AStar.h backend/include/AStar.cpp
         # add your own header files below - should be automatically added in CLion
         # example (can also separate with newlines):
         # src/AVL.h src/AVL.cpp
