@@ -1,3 +1,5 @@
+#include <fstream>
+#include <sstream>
 #include <iostream>
 #include "../include/AdjacencyList.h"
 
@@ -37,20 +39,80 @@ void AdjacencyList::LoadFromCSV(const std::string& file_path) {
     // Create Stations using "Station start_station{station_name, {start_lat, start_long}};" etc.
     // Create Composite Key using "std::array<std::string, 3> composite_key{month, time_of_day, day_of_week};"
     // Create Edge using "AddEdge(composite_key, start_station, end_station, travel_time);"
+    std::ifstream file(file_path);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << file_path << std::endl;
+        return;
+    }
+
+    std::string line;
+    std::getline(file, line); // Skip header
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string token;
+
+        std::string month, time_of_day, day_of_week;
+        std::string start_name, end_name;
+        double start_lat, start_lon, end_lat, end_lon, avg_time;
+
+        // Parse each field
+        std::getline(ss, month, ',');
+        std::getline(ss, time_of_day, ',');
+        std::getline(ss, day_of_week, ',');
+
+        std::getline(ss, start_name, ',');
+
+        std::getline(ss, token, ',');
+        start_lat = std::stod(token);
+
+        std::getline(ss, token, ',');
+        start_lon = std::stod(token);
+
+        std::getline(ss, end_name, ',');
+
+        std::getline(ss, token, ',');
+        end_lat = std::stod(token);
+
+        std::getline(ss, token, ',');
+        end_lon = std::stod(token);
+
+        std::getline(ss, token, ',');
+        avg_time = std::stod(token);
+
+        // Create station structs
+        Station start_station{start_name, {start_lat, start_lon}};
+        Station end_station{end_name, {end_lat, end_lon}};
+
+        // Build time-based key
+        std::array<std::string, 3> composite_key{month, time_of_day, day_of_week};
+
+        // Add edge (auto-adds stations too)
+        AddEdge(composite_key, start_station, end_station, avg_time);
+    
+    }
 }
 
 Station* AdjacencyList::GetStation(int station_id) {
-  // Temporary return statement
-  return new Station;
+    auto it = id_to_station_.find(station_id);
+    if (it != id_to_station_.end()) {
+        return &(it->second);
+    }
+    return nullptr;
 }
 
 int AdjacencyList::GetStationId(const Station& station) {
-  // Temporary return statement
-  return 0;
+    auto it = station_to_id_.find(station);
+    if (it != station_to_id_.end()) {
+        return it->second;
+    }
+    return -1; // Not found
 }
 
-std::unordered_map<int, std::vector<Edge>>*
-  AdjacencyList::GetAdjacencyList(const std::array<std::string, 3>& composite_key) {
-  // Temporary return statement
-  return new std::unordered_map<int, std::vector<Edge>>;
+std::unordered_map<int, std::vector<Edge>>* AdjacencyList::GetAdjacencyList(const std::array<std::string, 3>& composite_key) {
+    auto it = adj_list_.find(composite_key);
+    if (it != adj_list_.end()) {
+        return &(it->second);
+    }
+    return nullptr;
 }
