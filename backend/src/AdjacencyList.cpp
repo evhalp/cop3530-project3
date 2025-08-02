@@ -101,6 +101,14 @@ const Station* AdjacencyList::GetStation(int station_id) const {
     return nullptr;
 }
 
+const Station* AdjacencyList::GetStation(const std::string &name) const {
+    auto it = name_to_station_.find(name);
+    if (it != name_to_station_.end()) {
+        return &(it->second);
+    }
+    return nullptr;
+}
+
 const int AdjacencyList::GetStationId(const Station& station) const {
     auto it = station_to_id_.find(station);
     if (it != station_to_id_.end()) {
