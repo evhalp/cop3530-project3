@@ -14,6 +14,9 @@ int AdjacencyList::AddStation(const Station& station) {
   const int new_id = station_count_++;
   station_to_id_[station] = new_id;
 
+  // Add station to name to station map
+  name_to_station_[station.station_name] = station;
+
   return new_id;
 }
 
@@ -89,7 +92,7 @@ void AdjacencyList::LoadFromCSV(const std::string& file_path) {
 
         // Add edge (auto-adds stations too)
         AddEdge(composite_key, start_station, end_station, avg_time);
-    
+
     }
 }
 
