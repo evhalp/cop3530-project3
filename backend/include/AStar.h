@@ -12,7 +12,7 @@ using namespace std;
 class AStar {
 public:
     // Result: pair of <path as station IDs, total travel time>
-    static pair<vector<int>, double> FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
+    static pair<double, vector<int>> FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
         int start_id, int goal_id);
 
 private:

@@ -14,7 +14,7 @@ double AStar::Heuristic(const Station& a, const Station& b) {//just the pythag o
     return time_minutes;
 }
 
-pair<vector<int>, double> AStar::FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
+pair<double, vector<int>> AStar::FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
         int start_id, int goal_id) {
 
         priority_queue<Node, vector<Node>, greater<Node>> open_set;
@@ -43,7 +43,7 @@ pair<vector<int>, double> AStar::FindPath(const AdjacencyList& graph, const unor
                 }
                 path.push_back(start_id);
                 reverse(path.begin(), path.end());
-                return {path, g_cost[goal_id]};
+                return {g_cost[goal_id], path};
             }
 
             for (const Edge& edge : adj_list.at(current.station_id)) {
@@ -69,5 +69,5 @@ pair<vector<int>, double> AStar::FindPath(const AdjacencyList& graph, const unor
             }
         }
 
-        return {{}, -1.0}; // No path found
+        return {-1.0, {}}; // No path found
     }
