@@ -13,6 +13,7 @@ int AdjacencyList::AddStation(const Station& station) {
   // Add station to bidirectional maps with next available ID
   const int new_id = station_count_++;
   station_to_id_[station] = new_id;
+  id_to_station_[new_id] = station;
 
   // Add station to name to station map
   name_to_station_[station.station_name] = station;
