@@ -14,8 +14,7 @@ double AStar::Heuristic(const Station& a, const Station& b) {//just the pythag o
     return time_minutes;
 }
 
-pair<double, vector<Station>> AStar::FindPath(
-    const AdjacencyList& graph,
+pair<double, vector<Station>> AStar::FindPath(    const AdjacencyList& graph,
     const unordered_map<int, vector<Edge>>& adj_list,
     int start_id,
     int goal_id) {
