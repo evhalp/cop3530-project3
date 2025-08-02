@@ -28,10 +28,10 @@ void Dijkstra::relaxEdge(int from_id, int to_id, double edge_weight,
 
 }
 
-std::vector<Edge> Dijkstra::GetPath(std::unordered_map<int, int> predecessors,
+std::vector<Station> Dijkstra::GetPath(std::unordered_map<int, int> predecessors,
                                     int start_id, int end_id) const {
 
-  std::vector<Edge> path;
+  std::vector<Station> path;
 
   // If there's no path to the destination, return an empty path
   if (predecessors.find(end_id) == predecessors.end() && start_id != end_id) {
@@ -51,30 +51,15 @@ std::vector<Edge> Dijkstra::GetPath(std::unordered_map<int, int> predecessors,
   std::reverse(station_path.begin(), station_path.end());
 
   // Convert station IDs to Edge objects
-  auto* adj_list = GetAdjacencyList();
-
-  for (int i = 0; i < static_cast<int>(station_path.size()) - 1; ++i) {
-    int from_station_id = station_path[i];
-    int to_station_id = station_path[i + 1];
-
-    // Find the edge between these stations
-    if (adj_list->find(from_station_id) != adj_list->end()) {
-      for (const auto& edge : (*adj_list)[from_station_id]) {
-        // Check if this edge goes to the target station
-        int edge_end_id = adj_lists_->GetStationId(edge.end_station);
-        if (edge_end_id == to_station_id) {
-          path.push_back(edge);
-          break;
-        }
-      }
-    }
+  for (auto station_id : station_path) {
+    path.push_back(*adj_lists_->GetStation(station_id));
   }
 
   return path;
 }
 
-std::pair<double, std::vector<Edge>> Dijkstra::GetQuickestPath(const Station& start_station,
-                                                              const Station& end_station) {
+std::pair<double, std::vector<Station>> Dijkstra::GetQuickestPath(const Station& start_station,
+                                                                          const Station& end_station) {
   // Get the adjacency list for current composite key
   auto* adj_list = GetAdjacencyList();
 
@@ -84,7 +69,7 @@ std::pair<double, std::vector<Edge>> Dijkstra::GetQuickestPath(const Station& st
 
   // If the stations do not exist, return sentinel value
   if (start_id == -1 || end_id == -1) {
-    return {std::numeric_limits<double>::infinity(), std::vector<Edge>()};
+    return {-1, std::vector<Station>()};
   }
 
   // Initialize data structures for Dijkstra's algorithm
@@ -131,5 +116,5 @@ std::pair<double, std::vector<Edge>> Dijkstra::GetQuickestPath(const Station& st
   }
 
   // Return the quickest time and the path to get to the end
-  return {times[end_id], GetPath(predecessors, start_id, end_id)};
+  return std::make_pair(times[end_id], GetPath(predecessors, start_id, end_id));
 }

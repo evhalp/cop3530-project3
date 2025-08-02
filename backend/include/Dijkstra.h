@@ -32,7 +32,7 @@ class Dijkstra {
                     std::priority_queue<Node, std::vector<Node>, std::greater<>>& pq);
     // Helper function for GetQuickestPath
     // Uses predecessors list to get the quickest path found by Dijkstra algorithm
-    std::vector<Edge> GetPath(std::unordered_map<int, int> predecessors, int start_id, int end_id) const;
+    std::vector<Station> GetPath(std::unordered_map<int, int> predecessors, int start_id, int end_id) const;
 
   public:
 
@@ -40,7 +40,7 @@ class Dijkstra {
       : composite_key_({}), adj_lists_(adj_lists) {}
 
     // Runs the Dijkstra Search algorithm using the stored adjacency list keyed to the composite_key_
-    std::pair<double, std::vector<Edge>> GetQuickestPath(const Station& start_station, const Station& end_station);
+    std::pair<double, std::vector<Station>> GetQuickestPath(const Station& start_station, const Station& end_station);
 
     void SetCompositeKey(const std::array<std::string, 3>& composite_key) {composite_key_ = composite_key;}
     std::array<std::string, 3> GetCompositeKey() const { return composite_key_; }
