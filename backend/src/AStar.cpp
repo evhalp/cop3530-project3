@@ -1,9 +1,20 @@
-#include "astar.h"
 #include <algorithm> // for reverse
+#include <queue>
 
+#include "../include/AStar.h"
 using namespace std;
 
-pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
+double AStar::Heuristic(const Station& a, const Station& b) {//just the pythag of the coordinates of each station passed
+    double dx = a.coordinates.first - b.coordinates.first;
+    double dy = a.coordinates.second - b.coordinates.second;
+    double distance = sqrt(dx * dx + dy * dy); // in degrees
+
+    double time_minutes = distance * 111.0/ 30.0* 60.0;           // degrees to km to hours to minutes
+
+    return time_minutes;
+}
+
+pair<vector<int>, double> AStar::FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
         int start_id, int goal_id) {
 
         priority_queue<Node, vector<Node>, greater<Node>> open_set;
@@ -13,7 +24,6 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
         g_cost[start_id] = 0.0;
 
         // h(start): heuristic estimate from start to goal
-        // Fixed: Use const pointers to match GetStation's const return type
         const Station* start_station = graph.GetStation(start_id);
         const Station* goal_station = graph.GetStation(goal_id);
         double h_start = Heuristic(*start_station, *goal_station);//check open_set
@@ -48,11 +58,10 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
                     // h(n): heuristic estimate from neighbor to goal
                     // Fixed: Use const pointers to match GetStation's const return type
                     const Station* neighbor_station = graph.GetStation(neighbor_id);
-                    const Station* goal_station = graph.GetStation(goal_id);
-                    double h = Heuristic(*neighbor_station, *goal_station);
+                    const double h = Heuristic(*neighbor_station, *goal_station);
 
                     // f(n) = g(n) + h(n)
-                    double f = tentative_g + h;
+                    const double f = tentative_g + h;
 
                     open_set.push({neighbor_id, tentative_g, f});
                     came_from[neighbor_id] = current.station_id;
@@ -61,15 +70,4 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
         }
 
         return {{}, -1.0}; // No path found
-    }
-
-// Fixed: Removed incorrect static keyword from function definition
-double AStarSearch::Heuristic(const Station& a, const Station& b) {//just the pythag of the coordinates of each station passed
-        double dx = a.coordinates.first - b.coordinates.first;
-        double dy = a.coordinates.second - b.coordinates.second;
-        double distance = sqrt(dx * dx + dy * dy); // in degrees
-
-        double time_minutes = distance * 111.0/ 30.0* 60.0;           // degrees to km to hours to minutes
-
-        return time_minutes;
     }

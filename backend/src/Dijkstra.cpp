@@ -53,7 +53,7 @@ std::vector<Edge> Dijkstra::GetPath(std::unordered_map<int, int> predecessors,
   // Convert station IDs to Edge objects
   auto* adj_list = GetAdjacencyList();
 
-  for (int i = 0; i < station_path.size() - 1; ++i) {
+  for (int i = 0; i < static_cast<int>(station_path.size()) - 1; ++i) {
     int from_station_id = station_path[i];
     int to_station_id = station_path[i + 1];
 

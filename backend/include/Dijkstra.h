@@ -26,7 +26,7 @@ class Dijkstra {
     std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList() const;
     // Helper function for GetQuickestPath
     // Relaxes the edge between two stations
-    void relaxEdge(int from_id, int to_id, double edge_weight,
+    static void relaxEdge(int from_id, int to_id, double edge_weight,
                     std::unordered_map<int, double>& times,
                     std::unordered_map<int, int>& predecessors,
                     std::priority_queue<Node, std::vector<Node>, std::greater<>>& pq);

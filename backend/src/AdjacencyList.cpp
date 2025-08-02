@@ -13,7 +13,6 @@ int AdjacencyList::AddStation(const Station& station) {
   // Add station to bidirectional maps with next available ID
   const int new_id = station_count_++;
   station_to_id_[station] = new_id;
-  id_to_station_[new_id] = station; // Fixed: Add to id_to_station_ map
 
   return new_id;
 }
@@ -90,18 +89,10 @@ void AdjacencyList::LoadFromCSV(const std::string& file_path) {
 
         // Add edge (auto-adds stations too)
         AddEdge(composite_key, start_station, end_station, avg_time);
-        
-        // DEBUGGING WILL DELETE SORRY: Print first few stations being loaded
-        static int debug_count = 0;
-        if (debug_count < 5) {
-            std::cout << "Debug: Loading stations - Start: '" << start_name << "', End: '" << end_name << "'" << std::endl;
-            debug_count++;
-        }
     
     }
 }
 
-// Fixed: Added const qualifiers to match header declaration
 const Station* AdjacencyList::GetStation(int station_id) const {
     auto it = id_to_station_.find(station_id);
     if (it != id_to_station_.end()) {
@@ -110,23 +101,12 @@ const Station* AdjacencyList::GetStation(int station_id) const {
     return nullptr;
 }
 
-int AdjacencyList::GetStationId(const Station& station) const {
+const int AdjacencyList::GetStationId(const Station& station) const {
     auto it = station_to_id_.find(station);
     if (it != station_to_id_.end()) {
         return it->second;
     }
     return -1; // Not found
-}
-
-// I think I need to add this because people will be searching by name
-const Station* AdjacencyList::GetStationByName(const std::string& station_name) const {
-    // Search through all stations to find one with matching name
-    for (const auto& pair : id_to_station_) {
-        if (pair.second.station_name == station_name) {
-            return &(pair.second);
-        }
-    }
-    return nullptr;
 }
 
 std::unordered_map<int, std::vector<Edge>>* AdjacencyList::GetAdjacencyList(const std::array<std::string, 3>& composite_key) {

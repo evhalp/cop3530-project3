@@ -8,13 +8,9 @@
 struct Station {
     std::string station_name;
     std::pair<double, double> coordinates;
-    
-    // Added equality operator for unordered_map compatibility
-    // Fixed: Use both name and coordinates for proper uniqueness
+
     bool operator==(const Station& other) const {
-        return station_name == other.station_name && 
-               coordinates.first == other.coordinates.first && 
-               coordinates.second == other.coordinates.second;
+        return station_name == other.station_name && coordinates == other.coordinates;
     }
 };
 
@@ -22,6 +18,12 @@ struct Edge {
     Station start_station;
     Station end_station;
     double travel_time{};
+
+    bool operator==(const Edge& other) const {
+        return start_station == other.start_station &&
+               end_station == other.end_station &&
+               travel_time == other.travel_time;
+    }
 };
 
 struct ArrayHash {
@@ -73,13 +75,9 @@ class AdjacencyList {
         // Populates adjacency_list using the given file path
         void LoadFromCSV(const std::string& file_path);
 
-        // Fixed: Added const qualifiers and return type for const-correctness
         const Station* GetStation(int station_id) const;
-        int GetStationId(const Station& station) const;
-        
-        // Get station by name (returns first match with any coordinates)
-        const Station* GetStationByName(const std::string& station_name) const;
-        int GetStationCount() const { return station_count_; }
+        const int GetStationId(const Station& station) const;
+        const int GetStationCount() const { return station_count_; }
 
         // Accessor function to allow AStar and Dijkstra access to the adjacency list.
         std::unordered_map<int, std::vector<Edge>>* GetAdjacencyList(const std::array<std::string, 3>& composite_key);

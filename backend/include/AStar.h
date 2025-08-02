@@ -9,7 +9,7 @@
 
 using namespace std;
 
-class AStarSearch {
+class AStar {
 public:
     // Result: pair of <path as station IDs, total travel time>
     static pair<vector<int>, double> FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
@@ -26,7 +26,6 @@ private:
         }
     };
 
-    // Fixed: Removed duplicate function declarations and syntax errors
     static double Heuristic(const Station& a, const Station& b);
 };
 
