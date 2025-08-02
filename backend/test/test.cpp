@@ -1,5 +1,6 @@
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
+#include <filesystem>
 
 // change if you choose to use a different header name
 #include "../include/AdjacencyList.h"
@@ -9,6 +10,7 @@ AdjacencyList adj_list;
 Dijkstra dijkstra(&adj_list);
 
 TEST_CASE("Single-Edge Search", "[dijkstra]") {
+  std::cout << "Working directory: " << std::filesystem::current_path() << std::endl;
   adj_list.LoadFromCSV("../../data/subway_travel_times.csv");
   dijkstra.SetCompositeKey({"August", "early_morning", "Saturday"});
   Station start_station{"Greenpoint Av", {40.731352, -73.954449}};

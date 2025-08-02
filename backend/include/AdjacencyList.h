@@ -55,6 +55,9 @@ class AdjacencyList {
         std::unordered_map<int, Station> id_to_station_;
         std::unordered_map<Station, int, StationHash> station_to_id_;
 
+        // Convert between station name and station for frontend
+        std::unordered_map<std::string, Station> name_to_station_;
+
         // Store multiple different adjacency lists mapped by a composite key containing month, day, and time of day
         std::unordered_map<std::array<std::string, 3>, std::unordered_map<int, std::vector<Edge>>, ArrayHash> adj_list_;
 
@@ -70,12 +73,15 @@ class AdjacencyList {
 
     public:
 
+
+
         explicit AdjacencyList() : station_count_(0) {};
 
         // Populates adjacency_list using the given file path
         void LoadFromCSV(const std::string& file_path);
 
         const Station* GetStation(int station_id) const;
+        const Station* GetStation(const std::string &name) const;
         const int GetStationId(const Station& station) const;
         const int GetStationCount() const { return station_count_; }
 
