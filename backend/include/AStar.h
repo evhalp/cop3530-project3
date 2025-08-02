@@ -13,7 +13,7 @@ class AStarSearch {
 public:
     // Result: pair of <path as station IDs, total travel time>
     static pair<vector<int>, double> FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
-        int start_id,int goal_id);
+        int start_id, int goal_id);
 
 private:
     struct Node {
@@ -26,12 +26,8 @@ private:
         }
     };
 
-
-    pair<vector<int>, double> FindPath(const AdjacencyList& graph, const unordered_map<int, vector<Edge>>& adj_list,
-        int start_id, int goal_id) {}
-
-    static double Heuristic(const Station& a, const Station& b) {}
-
+    // Fixed: Removed duplicate function declarations and syntax errors
+    static double Heuristic(const Station& a, const Station& b);
 };
 
 

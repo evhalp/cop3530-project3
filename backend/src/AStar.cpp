@@ -13,7 +13,10 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
         g_cost[start_id] = 0.0;
 
         // h(start): heuristic estimate from start to goal
-        double h_start = Heuristic(*graph.GetStation(start_id), *graph.GetStation(goal_id));//check open_set
+        // Fixed: Use const pointers to match GetStation's const return type
+        const Station* start_station = graph.GetStation(start_id);
+        const Station* goal_station = graph.GetStation(goal_id);
+        double h_start = Heuristic(*start_station, *goal_station);//check open_set
         open_set.push({start_id, 0.0, h_start}); // f(start) = g(start) + h(start) = 0 + h
 
         while (!open_set.empty()) {
@@ -43,7 +46,10 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
                     g_cost[neighbor_id] = tentative_g;
 
                     // h(n): heuristic estimate from neighbor to goal
-                    double h = Heuristic(*graph.GetStation(neighbor_id), *graph.GetStation(goal_id));
+                    // Fixed: Use const pointers to match GetStation's const return type
+                    const Station* neighbor_station = graph.GetStation(neighbor_id);
+                    const Station* goal_station = graph.GetStation(goal_id);
+                    double h = Heuristic(*neighbor_station, *goal_station);
 
                     // f(n) = g(n) + h(n)
                     double f = tentative_g + h;
@@ -57,7 +63,8 @@ pair<vector<int>, double> AStarSearch::FindPath(const AdjacencyList& graph, cons
         return {{}, -1.0}; // No path found
     }
 
-    static double AStarSearch::Heuristic(const Station& a, const Station& b) {//just the pythag of the coordinates of each station passed
+// Fixed: Removed incorrect static keyword from function definition
+double AStarSearch::Heuristic(const Station& a, const Station& b) {//just the pythag of the coordinates of each station passed
         double dx = a.coordinates.first - b.coordinates.first;
         double dy = a.coordinates.second - b.coordinates.second;
         double distance = sqrt(dx * dx + dy * dy); // in degrees

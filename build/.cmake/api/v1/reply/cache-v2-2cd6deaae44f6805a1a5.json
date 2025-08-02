@@ -766,22 +766,6 @@
 			"value" : "OFF"
 		},
 		{
-			"name" : "CATCH_CONFIG_SHARED_LIBRARY",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : ""
-				}
-			],
-			"type" : "UNINITIALIZED",
-			"value" : ""
-		},
-		{
 			"name" : "CATCH_CONFIG_USE_ASYNC",
 			"properties" : 
 			[
@@ -1029,10 +1013,6 @@
 			"name" : "CMAKE_CTEST_COMMAND",
 			"properties" : 
 			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
 				{
 					"name" : "HELPSTRING",
 					"value" : "Path to ctest program executable."
@@ -1975,7 +1955,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "3"
+			"value" : "1"
 		},
 		{
 			"name" : "CMAKE_OBJCOPY",
@@ -2055,7 +2035,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "Project2"
+			"value" : "SubwayRouteFinder"
 		},
 		{
 			"name" : "CMAKE_PROJECT_VERSION",
@@ -2734,6 +2714,18 @@
 			"value" : "OFF"
 		},
 		{
+			"name" : "FIND_PACKAGE_MESSAGE_DETAILS_PkgConfig",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Details about finding PkgConfig"
+				}
+			],
+			"type" : "INTERNAL",
+			"value" : "[C:/msys64/mingw64/bin/pkg-config.exe][v2.3.0()]"
+		},
+		{
 			"name" : "GIT_EXECUTABLE",
 			"properties" : 
 			[
@@ -2810,6 +2802,38 @@
 			"value" : ""
 		},
 		{
+			"name" : "PKG_CONFIG_ARGN",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "Arguments to supply to pkg-config"
+				}
+			],
+			"type" : "STRING",
+			"value" : ""
+		},
+		{
+			"name" : "PKG_CONFIG_EXECUTABLE",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "pkg-config executable"
+				}
+			],
+			"type" : "FILEPATH",
+			"value" : "C:/msys64/mingw64/bin/pkg-config.exe"
+		},
+		{
 			"name" : "Project2_BINARY_DIR",
 			"properties" : 
 			[
@@ -2860,6 +2884,42 @@
 			],
 			"type" : "STRING",
 			"value" : "JenComputer"
+		},
+		{
+			"name" : "SubwayRouteFinder_BINARY_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/jenni/School/DSA/P3/cop3530-project3/build"
+		},
+		{
+			"name" : "SubwayRouteFinder_IS_TOP_LEVEL",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "ON"
+		},
+		{
+			"name" : "SubwayRouteFinder_SOURCE_DIR",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "Value Computed by CMake"
+				}
+			],
+			"type" : "STATIC",
+			"value" : "C:/Users/jenni/School/DSA/P3/cop3530-project3/backend"
 		},
 		{
 			"name" : "_CATCH_DISCOVER_TESTS_SCRIPT",
