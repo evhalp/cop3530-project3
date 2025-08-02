@@ -1,6 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
-#include <filesystem>
 
 #include "../include/AdjacencyList.h"
 #include "../include/Dijkstra.h"
