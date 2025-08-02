@@ -44,7 +44,6 @@ vector<Station> AStar::ReconstructPath(unordered_map<int, int>& predecessors, in
 pair<double, vector<Station>> AStar::GetQuickestPath(const Station& start_station, const Station& end_station) {
     if (!adj_list_) return {-1.0, {}};
 
-
     //initialization of id, and search structures
     int start_id = adj_lists_->GetStationId(start_station);
     int end_id = adj_lists_->GetStationId(end_station);
@@ -62,8 +61,6 @@ pair<double, vector<Station>> AStar::GetQuickestPath(const Station& start_statio
     const Station* goal_ptr = adj_lists_->GetStation(end_id);
     double h_start = Heuristic(start_station, *goal_ptr);
     open_set.push({start_id, 0.0, h_start});
-
-
 
     //A* logic
     while (!open_set.empty()) {
