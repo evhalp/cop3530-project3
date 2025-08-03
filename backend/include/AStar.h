@@ -9,6 +9,7 @@
 using namespace std;
 
 class AStar {
+
 private:
     struct Node {
         int station_id;
@@ -23,8 +24,6 @@ private:
     array<string, 3> composite_key_; //composite with month, time, week
     AdjacencyList* adj_lists_;
 
-
-    
     unordered_map<int, vector<Edge>>* adj_list_; 
 
     unordered_map<int, vector<Edge>>* GetAdjacencyList() const;

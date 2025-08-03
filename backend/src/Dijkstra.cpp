@@ -49,8 +49,12 @@ std::vector<Station> Dijkstra::GetPath(std::unordered_map<int, int> predecessors
   std::reverse(station_path.begin(), station_path.end());
 
   // Convert station IDs to Edge objects
+  int prev_id = -1;
   for (auto station_id : station_path) {
-    path.push_back(*adj_lists_->GetStation(station_id));
+    if (station_id != prev_id) {
+      path.push_back(*adj_lists_->GetStation(station_id));
+      prev_id = station_id;
+    }
   }
 
   return path;
