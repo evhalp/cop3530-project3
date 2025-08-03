@@ -1,0 +1,26 @@
+[
+{
+  "directory": "C:/Users/jenni/School/DSA/P3/cop3530-project3/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/subway_server.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -o CMakeFiles\\subway_server.dir\\src\\AdjacencyList.cpp.obj -c C:\\Users\\jenni\\School\\DSA\\P3\\cop3530-project3\\backend\\src\\AdjacencyList.cpp",
+  "file": "C:/Users/jenni/School/DSA/P3/cop3530-project3/backend/src/AdjacencyList.cpp",
+  "output": "CMakeFiles/subway_server.dir/src/AdjacencyList.cpp.obj"
+},
+{
+  "directory": "C:/Users/jenni/School/DSA/P3/cop3530-project3/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/subway_server.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -o CMakeFiles\\subway_server.dir\\src\\Dijkstra.cpp.obj -c C:\\Users\\jenni\\School\\DSA\\P3\\cop3530-project3\\backend\\src\\Dijkstra.cpp",
+  "file": "C:/Users/jenni/School/DSA/P3/cop3530-project3/backend/src/Dijkstra.cpp",
+  "output": "CMakeFiles/subway_server.dir/src/Dijkstra.cpp.obj"
+},
+{
+  "directory": "C:/Users/jenni/School/DSA/P3/cop3530-project3/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/subway_server.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -o CMakeFiles\\subway_server.dir\\src\\AStar.cpp.obj -c C:\\Users\\jenni\\School\\DSA\\P3\\cop3530-project3\\backend\\src\\AStar.cpp",
+  "file": "C:/Users/jenni/School/DSA/P3/cop3530-project3/backend/src/AStar.cpp",
+  "output": "CMakeFiles/subway_server.dir/src/AStar.cpp.obj"
+},
+{
+  "directory": "C:/Users/jenni/School/DSA/P3/cop3530-project3/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe  @CMakeFiles/subway_server.dir/includes_CXX.rsp -g -std=gnu++17 -Wall -Wextra -o CMakeFiles\\subway_server.dir\\src\\http_server.cpp.obj -c C:\\Users\\jenni\\School\\DSA\\P3\\cop3530-project3\\backend\\src\\http_server.cpp",
+  "file": "C:/Users/jenni/School/DSA/P3/cop3530-project3/backend/src/http_server.cpp",
+  "output": "CMakeFiles/subway_server.dir/src/http_server.cpp.obj"
+}
+]
