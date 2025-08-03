@@ -23,6 +23,11 @@ double AStar::Heuristic(const Station& a, const Station& b) const {
 //uses the map to get path from start id to finish id
 vector<Station> AStar::ReconstructPath(unordered_map<int, int>& predecessors, int start_id, int end_id) const {
     vector<int> path_ids;
+
+    if (predecessors.find(end_id) == predecessors.end() && start_id != end_id) {
+        return {};
+    }
+
     int node = end_id;
     while (predecessors.find(node) != predecessors.end()) {
         path_ids.push_back(node);
@@ -33,9 +38,13 @@ vector<Station> AStar::ReconstructPath(unordered_map<int, int>& predecessors, in
 
     //id to station object
     vector<Station> path;
+     int prev_id = -1;
     for (int id : path_ids) {
-        const Station* s = adj_lists_->GetStation(id);
-        if (s) path.push_back(*s);
+        if (id != prev_id) {
+            const Station* s = adj_lists_->GetStation(id);
+            if (s) path.push_back(*s);
+            prev_id = id;
+        }
     }
     return path;
 }
