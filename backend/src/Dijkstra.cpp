@@ -2,6 +2,8 @@
 #include <limits>
 #include <algorithm>
 #include <functional>
+#include <unordered_set>
+#include <iostream>
 
 std::unordered_map<int, std::vector<Edge>>* Dijkstra::GetAdjacencyList() const {
     return adj_lists_->GetAdjacencyList(composite_key_);
@@ -48,14 +50,29 @@ std::vector<Station> Dijkstra::GetPath(std::unordered_map<int, int> predecessors
   // Reverse to get path from start to end
   std::reverse(station_path.begin(), station_path.end());
 
-  // Convert station IDs to Edge objects
-  int prev_id = -1;
+  // Debug: Print station IDs before filtering
+  std::cout << "DEBUG: Station IDs before filtering: ";
+  for (auto id : station_path) {
+    std::cout << id << " ";
+  }
+  std::cout << std::endl;
+
+  // Convert station IDs to Station objects, ensuring no duplicates by station name
+  std::unordered_set<std::string> seen_names;
   for (auto station_id : station_path) {
-    if (station_id != prev_id) {
-      path.push_back(*adj_lists_->GetStation(station_id));
-      prev_id = station_id;
+    const Station* station = adj_lists_->GetStation(station_id);
+    if (station && seen_names.find(station->station_name) == seen_names.end()) {
+      path.push_back(*station);
+      seen_names.insert(station->station_name);
     }
   }
+
+  // Debug: Print final station names
+  std::cout << "DEBUG: Final station names: ";
+  for (const auto& station : path) {
+    std::cout << station.station_name << " ";
+  }
+  std::cout << std::endl;
 
   return path;
 }
@@ -120,3 +137,4 @@ std::pair<double, std::vector<Station>> Dijkstra::GetQuickestPath(const Station&
   // Return the quickest time and the path to get to the end
   return std::make_pair(times[end_id], GetPath(predecessors, start_id, end_id));
 }
+

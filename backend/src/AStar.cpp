@@ -1,5 +1,7 @@
 #include "../include/AStar.h"
 #include <algorithm>
+#include <unordered_set>
+#include <iostream>
 
 using namespace std;
 
@@ -36,16 +38,30 @@ vector<Station> AStar::ReconstructPath(unordered_map<int, int>& predecessors, in
     path_ids.push_back(start_id);
     reverse(path_ids.begin(), path_ids.end());
 
+    // Debug: Print station IDs before filtering
+    cout << "DEBUG A*: Station IDs before filtering: ";
+    for (auto id : path_ids) {
+        cout << id << " ";
+    }
+    cout << endl;
+
     //id to station object
     vector<Station> path;
-     int prev_id = -1;
+    unordered_set<string> seen_names;
     for (int id : path_ids) {
-        if (id != prev_id) {
-            const Station* s = adj_lists_->GetStation(id);
-            if (s) path.push_back(*s);
-            prev_id = id;
+        const Station* s = adj_lists_->GetStation(id);
+        if (s && seen_names.find(s->station_name) == seen_names.end()) {
+            path.push_back(*s);
+            seen_names.insert(s->station_name);
         }
     }
+
+    // Debug: Print final station names
+    cout << "DEBUG A*: Final station names: ";
+    for (const auto& station : path) {
+        cout << station.station_name << " ";
+    }
+    cout << endl;
     return path;
 }
 
@@ -100,3 +116,4 @@ pair<double, vector<Station>> AStar::GetQuickestPath(const Station& start_statio
 
     return {-1.0, {}};
 }
+
