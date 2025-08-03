@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NYC Subway Route Finder - Frontend
+
+A modern React/Next.js frontend for the NYC Subway Route Finder application that visualizes Dijkstra's and A* pathfinding algorithms with real-time route analysis.
+
+## Features
+
+- **Interactive Map Visualization** - Real-time subway route display using Leaflet.js
+- **Algorithm Comparison** - Side-by-side comparison of Dijkstra's and A* algorithms
+- **Route Analysis** - Detailed performance metrics and station exploration
+- **Modern UI** - Built with Tailwind CSS and Radix UI components
+- **Real-time Updates** - Live route finding with backend integration
+- **Responsive Design** - Works on desktop and mobile devices
+
+## Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **UI Components**: Radix UI + Shadcn/ui
+- **Maps**: React Leaflet with Leaflet.js
+- **Charts**: Recharts for data visualization
+- **HTTP Client**: Axios
+- **Icons**: Lucide React
+- **Validation**: Zod
+
+## Prerequisites
+
+- Node.js 18+ 
+- npm 8+
+- Backend server running on `http://localhost:8080`
 
 ## Getting Started
 
-First, run the development server:
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+2. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+
+3. **Open your browser:**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## Project Structure
+
+```
+frontend-next/
+├── src/
+│   ├── app/                 # Next.js App Router pages
+│   ├── components/          # React components
+│   │   ├── ui/             # Shadcn/ui components
+│   │   ├── app-sidebar.tsx # Main sidebar component
+│   │   ├── map-visualizer.tsx # Map visualization
+│   │   └── algorithm-comparison.tsx # Algorithm comparison
+│   ├── lib/                # Utility functions and API
+│   │   ├── api/           # API client functions
+│   │   └── utils.ts       # Utility functions
+│   └── types/             # TypeScript type definitions
+├── public/                # Static assets
+└── package.json          # Dependencies and scripts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Integration
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+The frontend connects to the C++ backend server:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Base URL**: `http://localhost:8080`
+- **Health Check**: `GET /health`
+- **Route Finding**: `POST /api/find-route`
+- **Algorithm Comparison**: `POST /api/compare-algorithms`
 
-## Learn More
+## Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Development
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Key Components
 
-## Deploy on Vercel
+- **App Sidebar** (`app-sidebar.tsx`) - Main navigation and route input
+- **Map Visualizer** (`map-visualizer.tsx`) - Interactive subway map
+- **Algorithm Comparison** (`algorithm-comparison.tsx`) - Performance analysis
+- **Location Input** (`location-input.tsx`) - Station selection interface
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Styling
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The project uses Tailwind CSS with custom components from Shadcn/ui:
+- Consistent design system
+- Dark/light mode support
+- Responsive breakpoints
+- Accessible components
+
+### State Management
+
+- React hooks for local state
+- API calls for backend communication
+- Real-time updates for route visualization
+
+## Deployment
+
+### Build for Production
+
+```bash
+npm run build
+npm run start
+```
+
+### Environment Variables
+
+No environment variables required - the frontend automatically connects to `http://localhost:8080` for the backend API.
+
+## Contributing
+
+1. Ensure the backend server is running
+2. Install dependencies with `npm install`
+3. Start development server with `npm run dev`
+4. Make changes and test with the backend integration
+
+## Troubleshooting
+
+- **Backend Connection**: Ensure the C++ server is running on port 8080
+- **Map Loading**: Check that Leaflet.js assets are loading correctly
+- **API Errors**: Verify backend endpoints are responding correctly
+- **Build Issues**: Clear `.next` folder and reinstall dependencies
+
+## Related Documentation
+
+- [Backend Setup Guide](../backend/SETUP_GUIDE.md)
+- [Main Project README](../readme.md)
+- [Requirements](../requirements.txt)

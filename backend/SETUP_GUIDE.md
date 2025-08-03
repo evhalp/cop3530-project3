@@ -1,18 +1,21 @@
 # Backend HTTP Server Setup Guide
 
 ## Overview
-This guide covers setting up the complete backend HTTP server that connects frontend to the route finding algorithms. The server is now kind of functional and I'm just working through debugging just on CLI though. 
+This guide covers setting up the complete backend HTTP server that connects frontend to the route finding algorithms. The server includes both Dijkstra's and A* algorithms with duplicate station prevention.
 
 ## What's Complete
 - HTTP server with cpp-httplib
 - CORS headers configured for frontend integration
 - CSV data loading from subway_travel_times.csv
-- Dijkstra algorithm integration
+- Dijkstra algorithm integration with duplicate prevention
+- A* algorithm integration with duplicate prevention
 - Station lookup by name 
 - Health check endpoint
 - Route finding endpoint
+- Algorithm comparison endpoint
 - Build system with CMake
-- All compilation errors *should be* resolved
+- All compilation errors resolved
+- Duplicate station filtering implemented
 
 ## Prerequisites
 - C++17 compatible compiler (MSVC, GCC, or Clang)
@@ -55,7 +58,7 @@ cd backend
 mkdir build
 cd build
 cmake ..
-cmake --build .
+cmake --build . --config Debug
 ```
 
 **Windows:**
@@ -64,7 +67,7 @@ cd backend
 mkdir build
 cd build
 cmake ..
-cmake --build .
+cmake --build . --config Debug
 ```
 
 ### IDE Setup
@@ -161,6 +164,21 @@ Expected response:
 }
 ```
 
+### Algorithm Comparison Test
+```bash
+curl -X POST http://localhost:8080/api/compare-algorithms \
+  -H "Content-Type: application/json" \
+  -d '{
+    "start_station": "116 St-Columbia University",
+    "end_station": "59 St-Columbus Circle",
+    "month": 1,
+    "day": 15,
+    "time": "08:00"
+  }'
+```
+
+Expected response includes both algorithms with performance metrics.
+
 ## API Endpoints
 
 ### GET /health
@@ -196,6 +214,48 @@ Find optimal route between two stations using Dijkstra's algorithm.
 }
 ```
 
+### POST /api/compare-algorithms
+Compare Dijkstra's and A* algorithms with detailed performance metrics.
+
+**Request:**
+```json
+{
+  "start_station": "Station Name",
+  "end_station": "Station Name", 
+  "month": 1,
+  "day": 15,
+  "time": "14:30"
+}
+```
+
+**Response:**
+```json
+{
+  "dijkstra": {
+    "route": ["Station 1", "Station 2", "Station 3"],
+    "estimated_time_minutes": 12.5,
+    "stations_explored": 15,
+    "execution_time_ms": 2.5,
+    "exploration_steps": ["Station 1", "Station 1 (explored)", "Station 2"],
+    "algorithm": "dijkstra"
+  },
+  "astar": {
+    "route": ["Station 1", "Station 2", "Station 3"],
+    "estimated_time_minutes": 12.5,
+    "stations_explored": 12,
+    "execution_time_ms": 1.8,
+    "exploration_steps": ["Station 1", "Station 1 (explored)", "Station 2"],
+    "algorithm": "astar"
+  },
+  "winner": "astar",
+  "performance_metrics": {
+    "time_difference": 0.0,
+    "exploration_difference": -3,
+    "efficiency_ratio": 0.72
+  }
+}
+```
+
 ## CORS Configuration
 The server automatically adds CORS headers for frontend integration:
 - `Access-Control-Allow-Origin: *`
@@ -207,6 +267,14 @@ The server loads stations from `data/subway_travel_times.csv`. Available station
 - "1 Av", "3 Av", "Bedford Av", "103 St", "110 St", "96 St"
 - "Cathedral Pkwy (110 St)", "103 St-Corona Plaza", "111 St"
 - "Junction Blvd", "104 St", "Rockaway Blvd"
+- "116 St-Columbia University", "59 St-Columbus Circle"
+
+## Duplicate Station Prevention
+The backend now includes robust duplicate station filtering:
+- **Issue**: Multiple station IDs could map to the same station name
+- **Solution**: Filter by station names instead of station IDs
+- **Implementation**: Uses `unordered_set<string>` to track seen station names
+- **Result**: Clean routes without duplicate stations
 
 ## Debugging
 
@@ -229,6 +297,8 @@ The server loads stations from `data/subway_travel_times.csv`. Available station
 - `http_server.cpp:85` - Route finding endpoint
 - `AdjacencyList.cpp:35` - CSV parsing
 - `AdjacencyList.cpp:95` - Station lookup
+- `Dijkstra.cpp:52` - Duplicate filtering
+- `AStar.cpp:35` - Duplicate filtering
 
 ## Troubleshooting
 
@@ -236,28 +306,29 @@ The server loads stations from `data/subway_travel_times.csv`. Available station
 - **Missing headers**: Ensure httplib.h and json.hpp are in backend/include/
 - **Compiler errors**: Verify C++17 support
 - **CMake errors**: Check CMake version (3.10+ required)
+- **Missing includes**: Ensure `#include <iostream>` and `#include <unordered_set>` are present
 
 ### Runtime Issues
 - **Port 8080 in use**: Change port in http_server.cpp or kill existing process
 - **CSV file not found**: Verify data/subway_travel_times.csv exists
 - **Station not found**: Check station names match CSV data exactly
+- **Duplicate stations**: Ensure latest code with duplicate filtering is compiled
 
 ### IDE-Specific Issues
 - **Visual Studio**: Check that MSVC compiler is selected
 - **CLion**: Verify CMake configuration in Settings > Build, Execution, Deployment > CMake
 
-## Frontend Integration
+## Frontend Integration (Next.js)
 Once the server is running:
-1. Create `.env` file in frontend directory:
-   ```
-   VITE_USE_MOCK=false
-   VITE_API_BASE_URL=http://localhost:8080
-   ```
-2. Start the frontend: `npm run dev`
-3. The frontend will automatically connect to the backend
+1. Navigate to the `frontend-next` directory
+2. Install dependencies: `npm install`
+3. Start the frontend: `npm run dev`
+4. The frontend will automatically connect to the backend on `http://localhost:8080`
 
 ## Performance Notes
 - CSV loading takes 2-3 seconds on first startup
 - Route finding responses are typically under 100ms
+- Algorithm comparison provides detailed performance metrics
 - Server handles concurrent requests efficiently
-- Memory usage scales with CSV data size 
+- Memory usage scales with CSV data size
+- Duplicate filtering adds minimal overhead 

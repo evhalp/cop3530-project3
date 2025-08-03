@@ -45,7 +45,7 @@ vector<Station> AStar::ReconstructPath(unordered_map<int, int>& predecessors, in
     }
     cout << endl;
 
-    //id to station object
+    //name to station object
     vector<Station> path;
     unordered_set<string> seen_names;
     for (int id : path_ids) {
